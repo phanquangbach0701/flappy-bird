@@ -78,11 +78,18 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void KillPlayer () {
-		GameManager.Instance.EndGame ();
+
+        IOnDie[] onDies = GetComponentsInChildren<IOnDie>();
+        foreach (IOnDie onDie in onDies)
+        {
+            onDie.OnDie();
+        }
+
+        GameManager.Instance.EndGame ();
 		playerRigid.velocity = Vector2.zero;
 		// Stop the flapping animation
-		GetComponent<Animator> ().enabled = false;
-	}
+		GetComponent<Animator> ().enabled = false;          
+    }
     public void SetSkin(RuntimeAnimatorController controller)
     {
         IOnChangeSkin[] changeSkins = GetComponentsInChildren<IOnChangeSkin>();

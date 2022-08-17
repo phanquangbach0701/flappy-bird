@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 50947411552664758}
   - component: {fileID: 61628308580313780}
   - component: {fileID: 58596148591762704}
-  - component: {fileID: 392359573}
+  - component: {fileID: 4159160147623343962}
+  - component: {fileID: 177221763210123340}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Player
@@ -55,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4287425612d03fc4b8a5f0b78dc41068, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -186,7 +187,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.06
---- !u!114 &392359573
+--- !u!114 &4159160147623343962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -199,3 +200,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 95378364581829048}
+--- !u!114 &177221763210123340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777335255771388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604e910092fc3684d922502a49a64557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
