@@ -2148,8 +2148,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waitTime: 1.5
   obstaclePrefabs:
-  - {fileID: 1556402544744368, guid: 3420925d93c729a48bb3705653b55702, type: 3}
   - {fileID: 1559013965715528, guid: e161e893614291a4f901af2beb8ba3f7, type: 3}
+  - {fileID: 624696108107011256, guid: 06895bcd751162043a4f8eb83879cace, type: 3}
+  - {fileID: 1516723332049911284, guid: 58d1b24476cf8b94c9d5e0d74be7a5b0, type: 3}
+  - {fileID: 8980149678153919794, guid: eaf1742bc31219047960115ed394686b, type: 3}
   - {fileID: 1605059603028916, guid: a8e61c5448eed224db90a8f4df1c01a0, type: 3}
   - {fileID: 1245435645037764, guid: c146c4e9728549d49acf16ab2faffc86, type: 3}
 --- !u!61 &1991070511

@@ -7,7 +7,10 @@ public class ObstacleSpawner : MonoBehaviour {
 	[SerializeField] private float waitTime;
 	[SerializeField] private GameObject[] obstaclePrefabs;
 	private float tempTime;
-
+    private int prePipe = -1;
+    List<int> difficults = new List<int>() { 0,0,0,1,1};
+    int currentDifficult = 0;
+    public int difRange = 3;
 	void Start(){
 		tempTime = waitTime - Time.deltaTime;
 	}
@@ -18,7 +21,7 @@ public class ObstacleSpawner : MonoBehaviour {
 			if(tempTime > waitTime){
 				// Wait for some time, create an obstacle, then set wait time to 0 and start again
 				tempTime = 0;
-				GameObject pipeClone = Instantiate(obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)], transform.position, transform.rotation);
+				GameObject pipeClone = Instantiate(GetPipe(), transform.position, transform.rotation);
 			}
 		}
 	}
@@ -30,5 +33,60 @@ public class ObstacleSpawner : MonoBehaviour {
 			Destroy(col.gameObject);
 		}
 	}
+    GameObject GetPipe()
+    {
 
+        if (prePipe == -1)
+        {
+            int rand = Random.Range(0, obstaclePrefabs.Length);
+            prePipe = rand;
+            InscreaseIndexDifficult();
+            return obstaclePrefabs[rand];
+        }
+        else
+        {
+            int tempIndex = prePipe;
+            if (prePipe > (difficults.Count / 2 - 1))
+            {
+                tempIndex = difficults.Count - 1 - prePipe;
+            }
+            int range = 1;
+            if (difRange > obstaclePrefabs.Length / 2)
+            {
+                difRange = obstaclePrefabs.Length / 2;
+            }
+            if (difficults[currentDifficult] == 0)
+            {
+                range = Random.Range(1, difRange);
+            }
+            else
+            {                
+                range = Random.Range(difRange, difficults.Count - tempIndex);
+            }
+            if (prePipe - range < 0)
+            {
+                prePipe += range;
+                
+            }
+            else if (prePipe + range >= obstaclePrefabs.Length)
+            {
+                prePipe -= range;
+            }
+            else
+            {
+                int rand = (Random.Range(0, 2) == 0) ? -1 : 1;
+                prePipe += rand * range;
+            }
+            InscreaseIndexDifficult();
+            return obstaclePrefabs[prePipe];
+        }
+    }
+    void InscreaseIndexDifficult()
+    {
+        currentDifficult++;
+        if (currentDifficult >= difficults.Count)
+        {
+            currentDifficult = 0;
+        }
+    }
 }
