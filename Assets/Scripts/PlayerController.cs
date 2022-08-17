@@ -40,23 +40,49 @@ public class PlayerController : MonoBehaviour {
 					GameManager.Instance.GetReady ();
 					GetComponent<Animator>().speed = 2;
 				}
-				playerRigid.gravityScale = 1f;
+                SetForce();
+
+                //playerRigid.gravityScale = 1f;
 				tiltSmooth = minTiltSmooth;
 				transform.rotation = upRotation;
-				playerRigid.velocity = Vector2.zero;
-				// Push the player upwards
-				playerRigid.AddForce (Vector2.up * thrust);
+				//playerRigid.velocity = Vector2.zero;
+				//// Push the player upwards
+				//playerRigid.AddForce (Vector2.up * thrust);
 				SoundManager.Instance.PlayTheAudio("Flap");
 			}
 		}
-		if (playerRigid.velocity.y < -1f) {
-			// Increase gravity so that downward motion is faster than upward motion
-			tiltSmooth = maxTiltSmooth;
-			playerRigid.gravityScale = 2f;
-		}
+		//if (playerRigid.velocity.y < -1f) {
+		//	// Increase gravity so that downward motion is faster than upward motion
+		//	tiltSmooth = maxTiltSmooth;
+		//	playerRigid.gravityScale = 2f;
+		//}
 	}
-
-	void OnTriggerEnter2D (Collider2D col) {
+    float force = 0f;
+    public float defaultForce = 0.15f;
+    public float gravity = -0.098f;
+    void SetForce()
+    {
+        force += defaultForce;
+        force = Mathf.Clamp(force, 0, 1.5f * defaultForce);
+    }
+    float timeForce = 0.8f;
+    private void FixedUpdate()
+    {
+        if (force > 0)
+        {
+            force -= defaultForce *  Time.fixedDeltaTime/ timeForce;
+            if (force < 0)
+            {
+                force = 0f;
+            }
+        }
+        if (force + gravity < 0)
+        {
+            tiltSmooth = maxTiltSmooth;
+        }
+        transform.position += new Vector3(0, force + gravity, 0);
+    }
+    void OnTriggerEnter2D (Collider2D col) {
 		if (col.transform.CompareTag ("Score")) {
 			Destroy (col.gameObject);
 			GameManager.Instance.UpdateScore ();
@@ -65,13 +91,17 @@ public class PlayerController : MonoBehaviour {
 			foreach (Transform child in col.transform.parent.transform) {
 				child.gameObject.GetComponent<BoxCollider2D> ().enabled = false;
 			}
-			KillPlayer ();
+            force = 0;
+            gravity = 0;
+            KillPlayer ();
 		}
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
 		if (col.transform.CompareTag ("Ground")) {
-			playerRigid.simulated = false;
+            force = 0;
+            gravity = 0;
+            playerRigid.simulated = false;
 			KillPlayer ();
 			transform.rotation = downRotation;
 		}
