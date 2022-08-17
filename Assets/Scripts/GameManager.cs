@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance;
 
+	[SerializeField] private RuntimeAnimatorController[] anims;
 	[SerializeField] private GameObject[] playerPrefabs;
 	[SerializeField] private Transform playerPos;
 	[SerializeField] private Sprite[] backgroundImage;
@@ -37,11 +38,12 @@ public class GameManager : MonoBehaviour {
 
 
 		ready = true;
-		// Create one amongst the 3 players
-		flappy = Instantiate (playerPrefabs[Random.Range (0, playerPrefabs.Length)], playerPos.position, transform.rotation);
-		flappy.transform.parent = playerPos;
-		// Use one amongst the 2 Backgrounds
-		background.sprite = backgroundImage[Random.Range (0, backgroundImage.Length)];
+        // Create one amongst the 3 players
+        flappy = Instantiate(playerPrefabs[0], playerPos.position, transform.rotation);
+        flappy.transform.parent = playerPos;
+        flappy.GetComponent<PlayerController>().SetSkin(anims[Random.Range(0, anims.Length)]);
+        // Use one amongst the 2 Backgrounds
+        background.sprite = backgroundImage[Random.Range (0, backgroundImage.Length)];
 	}
 
 	void Update () {

@@ -83,5 +83,12 @@ public class PlayerController : MonoBehaviour {
 		// Stop the flapping animation
 		GetComponent<Animator> ().enabled = false;
 	}
-
+    public void SetSkin(RuntimeAnimatorController controller)
+    {
+        IOnChangeSkin[] changeSkins = GetComponentsInChildren<IOnChangeSkin>();
+        foreach(IOnChangeSkin skin in changeSkins)
+        {
+            skin.OnChangeSkin(controller);
+        }
+    }
 }
